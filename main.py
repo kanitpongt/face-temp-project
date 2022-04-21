@@ -68,7 +68,8 @@ def main():
 
         if (len(faces) > 0):
             face_i = faces[0]
-            temp = mlx.object_temperature
+            #temp = mlx.object_temperature
+            temp = 36.2
 
             # Coordinates of face after scaling back by `size`
             (x, y, w, h) = [v * size for v in face_i]
@@ -79,11 +80,11 @@ def main():
             cv2.putText(frame, 'Temperature: {}'.format(temp), (x - 10, y - 10),
                         cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255))
 
-            noFever = (temp > 20.0 and temp < temp_threshold)
+            noFever = True#(temp > 20.0 and temp < temp_threshold)
 
             if (noFever and not servo_lock):
                 # TODO: Send signal to servo motor to unlock the door
-                asyncio.run(open_and_close_door(OPEN_TIME))
+                #asyncio.run(open_and_close_door(OPEN_TIME))
                 print("Passed face temperature")
         else:
             print("No face detected")
@@ -95,6 +96,7 @@ def main():
         if key == 27:
             break
 
+    cv2.destroyAllWindows()
     webcam.release()
 
 
